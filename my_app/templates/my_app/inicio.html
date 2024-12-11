@@ -1,0 +1,14 @@
+{% extends 'my_app/base.html' %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+    <h1>Página de Inicio</h1>
+    <p>Desde aquí puedes acceder a la creación de clientes, productos y compras.</p>
+    <ul>
+        <li><a href="{% url 'crear_cliente' %}">Crear Cliente</a></li>
+        <li><a href="{% url 'crear_producto' %}">Crear Producto</a></li>
+        <li><a href="{% url 'crear_compra' %}">Crear Compra</a></li>
+        <li><a href="{% url 'buscar_cliente' %}">Buscar Cliente</a></li>
+    </ul>
+{% endblock %}

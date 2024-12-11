@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Mi sitio{% endblock %}</title>
+</head>
+<body>
+    <nav>
+      <a href="{% url 'inicio' %}">Inicio</a> |
+      <a href="{% url 'crear_cliente' %}">Crear Cliente</a> |
+      <a href="{% url 'crear_producto' %}">Crear Producto</a> |
+      <a href="{% url 'crear_compra' %}">Crear Compra</a> |
+      <a href="{% url 'buscar_cliente' %}">Buscar Cliente</a>
+    </nav>
+    <hr>
+    {% block content %}{% endblock %}
+</body>
+</html>
