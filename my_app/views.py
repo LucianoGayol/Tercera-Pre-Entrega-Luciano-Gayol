@@ -1,7 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from my_app.models import Cliente
 from .forms import ClienteForm, ProductoForm, CompraForm
+from django.contrib.auth.decorators import login_required, user_passes_test
+
 
 def inicio(request):
     return render(request, 'my_app/inicio.html')
@@ -43,3 +45,28 @@ def buscar_cliente(request):
     if query:
         resultados = Cliente.objects.filter(nombre__icontains=query)
     return render(request, 'my_app/buscar_cliente.html', {'resultados': resultados, 'query': query})
+
+def listar_clientes(request):
+    clientes = Cliente.objects.all() 
+    return render(request, 'my_app/listar_clientes.html', {'clientes': clientes})
+
+def is_admin(user):
+    return user.is_staff
+
+@login_required
+@user_passes_test(is_admin)
+def editar_cliente(request, cliente_id):
+    cliente = get_object_or_404(Cliente, id=cliente_id)
+    if request.method == 'POST':
+        form = ClienteForm(request.POST, instance=cliente)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_clientes')
+    else:
+        form = ClienteForm(instance=cliente)
+    return render(request, 'my_app/editar_cliente.html', {'form': form})
+
+def borrar_cliente(request, cliente_id):
+    cliente = get_object_or_404(Cliente, id=cliente_id)
+    cliente.delete()
+    return redirect('listar_clientes')

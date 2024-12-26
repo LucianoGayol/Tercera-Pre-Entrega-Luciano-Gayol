@@ -1,0 +1,24 @@
+{% extends 'my_app/base.html' %}
+{% block title %}Listar Clientes{% endblock %}
+
+{% block content %}
+<h1>Lista de Clientes</h1>
+
+<p><a href="{% url 'crear_cliente' %}">Crear nuevo Cliente</a></p>
+
+{% if clientes %}
+    <ul>
+    {% for cliente in clientes %}
+        <li>
+            {{ cliente.nombre }} ({{ cliente.email }})
+            
+            | <a href="{% url 'editar_cliente' cliente.id %}">Editar</a>
+            | <a href="{% url 'borrar_cliente' cliente.id %}">Borrar</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No hay clientes registrados.</p>
+{% endif %}
+
+{% endblock %}
