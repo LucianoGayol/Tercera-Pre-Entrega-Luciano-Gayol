@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from my_app.models import Cliente
 from .forms import ClienteForm, ProductoForm, CompraForm
 from django.contrib.auth.decorators import login_required, user_passes_test
+from .models import Producto
 
 
 def inicio(request):
@@ -70,3 +71,29 @@ def borrar_cliente(request, cliente_id):
     cliente = get_object_or_404(Cliente, id=cliente_id)
     cliente.delete()
     return redirect('listar_clientes')
+
+def listar_productos(request):
+    productos = Producto.objects.all()
+    return render(request, 'my_app/listar_productos.html', {'productos': productos})
+
+
+@login_required
+@user_passes_test(is_admin)
+def editar_producto(request, producto_id):
+    producto = get_object_or_404(Producto, id=producto_id)
+    if request.method == 'POST':
+        form = ProductoForm(request.POST, instance=producto)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_productos')
+    else:
+        form = ProductoForm(instance=producto)
+    return render(request, 'my_app/editar_producto.html', {'form': form})
+
+@login_required
+@user_passes_test(is_admin)
+def borrar_producto(request, producto_id):
+    producto = get_object_or_404(Producto, id=producto_id)
+    producto.delete()
+    return redirect('listar_productos')
+
