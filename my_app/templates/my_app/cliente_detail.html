@@ -1,0 +1,21 @@
+{% extends 'my_app/base.html' %}
+{% block title %}Detalle del Cliente{% endblock %}
+
+{% block content %}
+<h1>Detalle de {{ cliente.nombre }} {{ cliente.apellido }}</h1>
+<p>Email: {{ cliente.email }}</p>
+<p>Edad: {{ cliente.edad }}</p>
+
+<h2>Compras</h2>
+{% if compras %}
+  <ul>
+    {% for c in compras %}
+      <li>{{ c.producto.nombre }} - {{ c.fecha_compra }}</li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No hay compras para este cliente.</p>
+{% endif %}
+
+<p><a href="{% url 'listar_clientes' %}">Volver a la lista de clientes</a></p>
+{% endblock %}

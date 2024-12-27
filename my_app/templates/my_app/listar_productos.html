@@ -1,23 +1,35 @@
 {% extends 'my_app/base.html' %}
-
-{% block title %}Listar Productos{% endblock %}
+{% block title %}Lista de Clientes{% endblock %}
 
 {% block content %}
-<h1>Lista de Productos</h1>
+<h1>Lista de Clientes</h1>
 
-<p><a href="{% url 'crear_producto' %}">Crear nuevo Producto</a></p>
-
-{% if productos %}
-    <ul>
-    {% for producto in productos %}
-        <li>
-            {{ producto.nombre }} - ${{ producto.precio }} 
-            | <a href="{% url 'editar_producto' producto.id %}">Editar</a>
-            | <a href="{% url 'borrar_producto' producto.id %}">Borrar</a>
-        </li>
+{% if clientes %}
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for cliente in clientes %}
+      <tr>
+        <td>{{ cliente.nombre }} {{ cliente.apellido }}</td>
+        <td>{{ cliente.email }}</td>
+        <td>
+          <a href="{% url 'editar_cliente' cliente.id %}">Editar</a> |
+          <a href="{% url 'borrar_cliente' cliente.id %}">Borrar</a> |
+          <a href="{% url 'cliente_detail' cliente.id %}">Ver Detalle</a>
+        </td>
+      </tr>
     {% endfor %}
-    </ul>
+    </tbody>
+  </table>
 {% else %}
-    <p>No hay productos registrados.</p>
+  <p>No hay clientes registrados.</p>
 {% endif %}
+
+<p><a href="{% url 'crear_cliente' %}">Crear Cliente</a></p>
 {% endblock %}

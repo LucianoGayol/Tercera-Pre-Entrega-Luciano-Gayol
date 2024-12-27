@@ -3,8 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from my_app.models import Cliente
 from .forms import ClienteForm, ProductoForm, CompraForm
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .models import Producto
-
+from .models import Producto, Cliente, Compra
 
 def inicio(request):
     return render(request, 'my_app/inicio.html')
@@ -99,3 +98,13 @@ def borrar_producto(request, producto_id):
 
 def about(request):
     return render(request, 'my_app/about.html')
+
+
+def cliente_detail(request, cliente_id):
+    cliente = get_object_or_404(Cliente, id=cliente_id)
+    compras_del_cliente = Compra.objects.filter(cliente=cliente)
+    return render(request, 'my_app/cliente_detail.html', {
+        'cliente': cliente,
+        'compras': compras_del_cliente
+    })
+
