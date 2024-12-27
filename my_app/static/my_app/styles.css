@@ -36,3 +36,9 @@ body {
     background: #007B9A;
   }
   
+  .card {
+    border-radius: 10px;
+}
+.btn-primary {
+    background-color: #34568B; /* tu color preferido */
+}

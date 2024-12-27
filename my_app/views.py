@@ -97,3 +97,5 @@ def borrar_producto(request, producto_id):
     producto.delete()
     return redirect('listar_productos')
 
+def about(request):
+    return render(request, 'my_app/about.html')
