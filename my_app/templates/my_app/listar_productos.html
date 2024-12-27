@@ -1,35 +1,34 @@
 {% extends 'my_app/base.html' %}
-{% block title %}Lista de Clientes{% endblock %}
+{% block title %}Lista de Productos{% endblock %}
 
 {% block content %}
-<h1>Lista de Clientes</h1>
+<h1>Lista de Productos</h1>
 
-{% if clientes %}
-  <table>
+{% if productos %}
+  <table class="table table-striped table-hover">
     <thead>
       <tr>
         <th>Nombre</th>
-        <th>Email</th>
+        <th>Precio</th>
         <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
-    {% for cliente in clientes %}
+    {% for producto in productos %}
       <tr>
-        <td>{{ cliente.nombre }} {{ cliente.apellido }}</td>
-        <td>{{ cliente.email }}</td>
+        <td>{{ producto.nombre }}</td>
+        <td>{{ producto.precio }}</td>
         <td>
-          <a href="{% url 'editar_cliente' cliente.id %}">Editar</a> |
-          <a href="{% url 'borrar_cliente' cliente.id %}">Borrar</a> |
-          <a href="{% url 'cliente_detail' cliente.id %}">Ver Detalle</a>
+          <a href="{% url 'editar_producto' producto.id %}" class="btn btn-warning btn-sm">Editar</a>
+          <a href="{% url 'borrar_producto' producto.id %}" class="btn btn-danger btn-sm">Borrar</a>
         </td>
       </tr>
     {% endfor %}
     </tbody>
   </table>
 {% else %}
-  <p>No hay clientes registrados.</p>
+  <p>No hay productos registrados.</p>
 {% endif %}
 
-<p><a href="{% url 'crear_cliente' %}">Crear Cliente</a></p>
+<p><a href="{% url 'crear_producto' %}" class="btn btn-success">Crear Producto</a></p>
 {% endblock %}
