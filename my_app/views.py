@@ -108,3 +108,13 @@ def cliente_detail(request, cliente_id):
         'compras': compras_del_cliente
     })
 
+def buscar_producto(request):
+    resultados = []
+    query = request.GET.get('q', '')
+    if query:
+        # Busca productos cuyo nombre contenga 'query'
+        resultados = Producto.objects.filter(nombre__icontains=query)
+    return render(request, 'my_app/buscar_producto.html', {
+        'resultados': resultados,
+        'query': query
+    })
