@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 
 from my_app.models import Cliente
-from .forms import ClienteForm, ProductoForm, CompraForm, ProveedorForm
+from .forms import ClienteForm, ProductoForm, CompraForm, ProveedorForm, MessageForm
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .models import Producto, Cliente, Compra, Proveedor
+from .models import Producto, Cliente, Compra, Proveedor, Message
 
 def inicio(request):
     return render(request, 'my_app/inicio.html')
@@ -162,3 +162,54 @@ def borrar_proveedor(request, proveedor_id):
 def proveedor_detail(request, proveedor_id):
     proveedor = get_object_or_404(Proveedor, id=proveedor_id)
     return render(request, 'my_app/proveedor_detail.html', {'proveedor': proveedor})
+
+
+@login_required
+def inbox(request):
+    """
+    Lista todos los mensajes recibidos por el usuario logueado.
+    """
+    user = request.user
+    # Todos los mensajes recibidos
+    messages_list = Message.objects.filter(receiver=user).order_by('-date')
+    return render(request, 'my_app/inbox.html', {'messages_list': messages_list})
+
+@login_required
+def outbox(request):
+    """
+    Lista todos los mensajes enviados por el usuario logueado.
+    """
+    user = request.user
+    # Todos los mensajes enviados
+    messages_list = Message.objects.filter(sender=user).order_by('-date')
+    return render(request, 'my_app/outbox.html', {'messages_list': messages_list})
+
+
+@login_required
+def new_message(request):
+    """
+    Crea un mensaje nuevo. El sender es el usuario logueado.
+    """
+    if request.method == 'POST':
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            new_msg = form.save(commit=False)
+            new_msg.sender = request.user  # El usuario logueado es el sender
+            new_msg.save()
+            return redirect('inbox')
+    else:
+        form = MessageForm()
+    return render(request, 'my_app/new_message.html', {'form': form})
+
+
+@login_required
+def message_detail(request, msg_id):
+    """
+    Ver el detalle de un mensaje. Solo el sender o receiver deberían verlo.
+    """
+    msg = get_object_or_404(Message, id=msg_id)
+    # Asegurarnos de que el user logueado sea sender o receiver
+    if msg.sender != request.user and msg.receiver != request.user:
+        return redirect('inbox')  # o algún error 403/404
+
+    return render(request, 'my_app/message_detail.html', {'message': msg})

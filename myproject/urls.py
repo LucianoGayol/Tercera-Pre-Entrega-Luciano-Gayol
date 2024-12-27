@@ -16,10 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from my_app.views import (listar_proveedores, crear_proveedor, editar_proveedor, borrar_proveedor,proveedor_detail, buscar_producto, cliente_detail, about, borrar_producto, editar_producto, inicio, crear_cliente, crear_producto, crear_compra, buscar_cliente, listar_clientes, editar_cliente, borrar_cliente, listar_productos)
-
+from my_app.views import (inbox, outbox, new_message, message_detail, listar_proveedores, crear_proveedor, editar_proveedor, borrar_proveedor,proveedor_detail, buscar_producto, cliente_detail, about, borrar_producto, editar_producto, inicio, crear_cliente, crear_producto, crear_compra, buscar_cliente, listar_clientes, editar_cliente, borrar_cliente, listar_productos)
 from django.contrib.auth.views import LoginView, LogoutView
-
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -44,4 +42,9 @@ urlpatterns = [
     path('proveedores/editar/<int:proveedor_id>/', editar_proveedor, name='editar_proveedor'),
     path('proveedores/borrar/<int:proveedor_id>/', borrar_proveedor, name='borrar_proveedor'),
     path('proveedores/detalle/<int:proveedor_id>/', proveedor_detail, name='proveedor_detail'),
+    path('messages/', inbox, name='inbox'),          
+    path('messages/outbox/', outbox, name='outbox'), 
+    path('messages/new/', new_message, name='new_message'),
+    path('messages/<int:msg_id>/', message_detail, name='message_detail'),
 ]
+

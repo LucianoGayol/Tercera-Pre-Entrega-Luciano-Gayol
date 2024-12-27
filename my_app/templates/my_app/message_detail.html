@@ -1,0 +1,13 @@
+{% extends 'my_app/base.html' %}
+{% block title %}Mensaje Detalle{% endblock %}
+
+{% block content %}
+<h1>Detalle del Mensaje</h1>
+<p><strong>De:</strong> {{ message.sender.username }}</p>
+<p><strong>Para:</strong> {{ message.receiver.username }}</p>
+<p><strong>Fecha:</strong> {{ message.date }}</p>
+<hr>
+<p>{{ message.body }}</p>
+
+<p><a href="{% url 'inbox' %}" class="btn btn-secondary">Volver al Inbox</a></p>
+{% endblock %}
