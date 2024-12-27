@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from my_app.views import (buscar_producto, cliente_detail, about, borrar_producto, editar_producto, inicio, crear_cliente, crear_producto, crear_compra, buscar_cliente, listar_clientes, editar_cliente, borrar_cliente, listar_productos)
+from my_app.views import (listar_proveedores, crear_proveedor, editar_proveedor, borrar_proveedor,proveedor_detail, buscar_producto, cliente_detail, about, borrar_producto, editar_producto, inicio, crear_cliente, crear_producto, crear_compra, buscar_cliente, listar_clientes, editar_cliente, borrar_cliente, listar_productos)
 
 from django.contrib.auth.views import LoginView, LogoutView
 
@@ -39,7 +39,9 @@ urlpatterns = [
     path('about/', about, name='about'),
     path('accounts/login/', LoginView.as_view(template_name='registration/login.html'), name='login'),
     path('accounts/logout/', LogoutView.as_view(), name='logout'),
+    path('proveedores/', listar_proveedores, name='listar_proveedores'),
+    path('proveedores/crear/', crear_proveedor, name='crear_proveedor'),
+    path('proveedores/editar/<int:proveedor_id>/', editar_proveedor, name='editar_proveedor'),
+    path('proveedores/borrar/<int:proveedor_id>/', borrar_proveedor, name='borrar_proveedor'),
+    path('proveedores/detalle/<int:proveedor_id>/', proveedor_detail, name='proveedor_detail'),
 ]
-
-
-

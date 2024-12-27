@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 
 from my_app.models import Cliente
-from .forms import ClienteForm, ProductoForm, CompraForm
+from .forms import ClienteForm, ProductoForm, CompraForm, ProveedorForm
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .models import Producto, Cliente, Compra
+from .models import Producto, Cliente, Compra, Proveedor
 
 def inicio(request):
     return render(request, 'my_app/inicio.html')
@@ -118,3 +118,47 @@ def buscar_producto(request):
         'resultados': resultados,
         'query': query
     })
+
+
+def is_admin(user):
+    return user.is_staff
+
+def listar_proveedores(request):
+    proveedores = Proveedor.objects.all()
+    return render(request, 'my_app/listar_proveedores.html', {'proveedores': proveedores})
+
+@login_required
+@user_passes_test(is_admin)
+def crear_proveedor(request):
+    if request.method == 'POST':
+        form = ProveedorForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_proveedores')
+    else:
+        form = ProveedorForm()
+    return render(request, 'my_app/crear_proveedor.html', {'form': form})
+
+@login_required
+@user_passes_test(is_admin)
+def editar_proveedor(request, proveedor_id):
+    proveedor = get_object_or_404(Proveedor, id=proveedor_id)
+    if request.method == 'POST':
+        form = ProveedorForm(request.POST, instance=proveedor)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_proveedores')
+    else:
+        form = ProveedorForm(instance=proveedor)
+    return render(request, 'my_app/editar_proveedor.html', {'form': form})
+
+@login_required
+@user_passes_test(is_admin)
+def borrar_proveedor(request, proveedor_id):
+    proveedor = get_object_or_404(Proveedor, id=proveedor_id)
+    proveedor.delete()
+    return redirect('listar_proveedores')
+
+def proveedor_detail(request, proveedor_id):
+    proveedor = get_object_or_404(Proveedor, id=proveedor_id)
+    return render(request, 'my_app/proveedor_detail.html', {'proveedor': proveedor})

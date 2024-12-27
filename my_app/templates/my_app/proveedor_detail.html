@@ -1,0 +1,12 @@
+{% extends 'my_app/base.html' %}
+{% block title %}Detalle de Proveedor{% endblock %}
+
+{% block content %}
+<h2>Detalle del Proveedor</h2>
+<p><strong>Nombre:</strong> {{ proveedor.nombre }}</p>
+<p><strong>Email:</strong> {{ proveedor.email }}</p>
+<p><strong>Teléfono:</strong> {{ proveedor.telefono }}</p>
+<p><strong>Dirección:</strong> {{ proveedor.direccion }}</p>
+
+<p><a href="{% url 'listar_proveedores' %}" class="btn btn-secondary mt-2">Volver</a></p>
+{% endblock %}

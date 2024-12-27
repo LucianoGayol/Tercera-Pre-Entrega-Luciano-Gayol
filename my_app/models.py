@@ -23,3 +23,14 @@ class Compra(models.Model):
 
     def __str__(self):
         return f"{self.producto.nombre} - {self.cliente.nombre} ({self.fecha_compra.date()})"
+    
+
+class Proveedor(models.Model):
+    nombre = models.CharField(max_length=100)
+    telefono = models.CharField(max_length=30, blank=True)
+    email = models.EmailField(unique=True)
+    direccion = models.CharField(max_length=200, blank=True)
+    # Agrega más campos si lo deseas (sitio web, ciudad, etc.)
+
+    def __str__(self):
+        return f"{self.nombre} ({self.email})"

@@ -1,0 +1,12 @@
+{% extends 'my_app/base.html' %}
+{% block title %}Crear Proveedor{% endblock %}
+
+{% block content %}
+<h1>Crear Proveedor</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Guardar</button>
+</form>
+<p><a href="{% url 'listar_proveedores' %}" class="btn btn-secondary mt-2">Volver</a></p>
+{% endblock %}
