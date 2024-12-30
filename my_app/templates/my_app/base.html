@@ -46,6 +46,17 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'about' %}">Acerca de</a>
                 </li>
+                {% if user.is_authenticated %}
+                <!-- Si el usuario ya está logueado, mostramos "Cerrar Sesión" -->
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'logout' %}">Cerrar Sesión</a>
+                </li>
+              {% else %}
+                <!-- Si el usuario NO está logueado, mostramos "Iniciar Sesión" -->
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'login' %}">Iniciar Sesión</a>
+                </li>
+              {% endif %}
               </ul>
             </div>
           </div>

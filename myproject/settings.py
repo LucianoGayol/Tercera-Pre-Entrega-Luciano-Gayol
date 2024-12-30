@@ -128,3 +128,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = 'login'  # O la ruta con name='login'
 LOGIN_REDIRECT_URL = 'inicio'
+
+
+LOGIN_REDIRECT_URL = 'inicio'   # Al loguearse, va a 'inicio'
+LOGOUT_REDIRECT_URL = 'inicio'  # Al desloguearse, vuelve a 'inicio'
