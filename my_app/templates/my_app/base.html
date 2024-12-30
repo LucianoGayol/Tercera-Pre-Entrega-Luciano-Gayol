@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="{% static 'my_app/styles.css' %}">
 </head>
 <body>
-    <!-- Optionally, un contenedor de Bootstrap -->
     <div class="container my-4">
         <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
           <div class="container-fluid">
@@ -22,6 +21,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarToggler">
               <ul class="navbar-nav ms-auto">
+                <!-- Clientes / Productos / Proveedores -->
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'listar_clientes' %}">Clientes</a>
                 </li>
@@ -30,13 +30,17 @@
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'listar_proveedores' %}">Proveedores</a>
-                </li>         
+                </li>
+
+                <!-- Buscadores -->
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'buscar_cliente' %}">Buscar Cliente</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'buscar_producto' %}">Buscar Producto</a>
-                </li>                
+                </li>
+
+                <!-- Crear proveedor, inbox, about -->
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'crear_proveedor' %}">Crear Proveedor</a>
                 </li>
@@ -46,30 +50,22 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'about' %}">Acerca de</a>
                 </li>
+
+                <!-- Lógica para Login / Logout / Registrarse -->
                 {% if user.is_authenticated %}
-                <!-- Si el usuario ya está logueado, mostramos "Cerrar Sesión" -->
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'logout' %}">Cerrar Sesión</a>
-                </li>
-              {% else %}
-                <!-- Si el usuario NO está logueado, mostramos "Iniciar Sesión" -->
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'login' %}">Iniciar Sesión</a>
-                </li>
-                {% if user.is_authenticated %}
-                <!-- Si el user está logueado, muestra un link de Logout -->
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'logout' %}">Cerrar Sesión</a>
-                </li>
-              {% else %}
-                <!-- Si no está logueado, enlaces para Iniciar Sesión y Registrarse -->
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'login' %}">Iniciar Sesión</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'signup' %}">Registrarse</a>
-                </li>
-              {% endif %}
+                  <!-- Si el usuario YA está logueado -->
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Cerrar Sesión</a>
+                  </li>
+                {% else %}
+                  <!-- Si el usuario NO está logueado -->
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Iniciar Sesión</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'signup' %}">Registrarse</a>
+                  </li>
+                {% endif %}
               </ul>
             </div>
           </div>
