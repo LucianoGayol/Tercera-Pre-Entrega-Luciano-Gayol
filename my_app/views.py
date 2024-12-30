@@ -4,6 +4,10 @@ from my_app.models import Cliente
 from .forms import ClienteForm, ProductoForm, CompraForm, ProveedorForm, MessageForm
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import Producto, Cliente, Compra, Proveedor, Message
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
+
+
 
 def inicio(request):
     return render(request, 'my_app/inicio.html')
@@ -213,3 +217,19 @@ def message_detail(request, msg_id):
         return redirect('inbox')  # o algún error 403/404
 
     return render(request, 'my_app/message_detail.html', {'message': msg})
+
+def signup(request):
+    """
+    Vista para registrar un usuario a través de un formulario
+    básico de Django (UserCreationForm).
+    """
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()  # Crea el usuario en la base de datos
+            # Opcional: loguear automáticamente tras registrarse
+            login(request, user)
+            return redirect('inicio')  # Redirige a la vista 'inicio'
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration/signup.html', {'form': form})
